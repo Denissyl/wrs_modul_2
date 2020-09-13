@@ -1,0 +1,15 @@
+# Стартовый файл.
+DirectoryIndex /index.php
+
+# Модуль маршрутизации.
+RewriteEngine On
+
+# Базовый корневой каталог.
+RewriteBase /
+# Запросы апи.
+
+RewriteRule ^api$ /?api [L]
+RewriteRule ^api/signup$ /?api&signup [L]
+
+# Ошибка 404.
+ErrorDocument 404 /
