@@ -1,2 +1,5 @@
-# wrs_modul_2
-wrs
+### Git
+'''bash
+git add.
+git commit -m "Save"
+'''g
