@@ -1,35 +1,53 @@
 <?php
-// Заголовки на ответ.
-//header("Content-Type: application/json; charset=utf-8");
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Origin, Authorization, Content-Type, X-Requested-With, Accept");
-//header("Access-Control-Allow-Credentials: false");
-//header("Access-Control-Max-Age: -1");
 
 include_once 'settings.php';
+
+try {
+    $pdo = new PDO("mysql:host={$localhost};dbname={$database}", $username, $password);
+
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage();
+    die();
+}
+
 
 if (isset($_GET['api'])) {
 
     if (isset($_GET['signup'])) {
 
-        include_once 'signup.php';
+        include_once "signup.php";
     }
-    else
-        {
 
-        header('HTTP/1.0 404 Created');
+    else if (isset($_GET['login'])) {
+
+        include_once "login.php";
+    }
+
+    else if (isset($_GET['photo'])) {
+
+        include_once "photo.php";
+    }
+
+    else {
+
+        header('HTTP/1.0 404 Not Found');
         exit;
     }
 }
 
 else {
-    header('HTTP/1.0 404 Created');
+
+    header('HTTP/1.0 404 Not Found');
     exit;
 }
 
 function api_response($array) {
 
+    // Заголовки на ответ.
     header("Content-Type: application/json; charset=utf-8");
     echo json_encode($array);
     exit;
