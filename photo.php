@@ -2,4 +2,7 @@
 
 echo $_GET['photo'];
 
-echo $_SERVER['HTTP_AUTHOIZATION'];
+echo $auth_user['id'];
+
+
+
