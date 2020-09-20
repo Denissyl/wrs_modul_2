@@ -17,4 +17,5 @@
  RewriteRule ^api$ /?api [L]
  RewriteRule ^api/signup$ /?api&signup [L]
  RewriteRule ^api/login$ /?api&login [L]
+ RewriteRule ^api/photo$ /?api&photo [L]
  RewriteRule ^api/photo/([0-9]{1,})$ /?api&photo=$1 [L]
