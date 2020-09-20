@@ -1,56 +1,54 @@
 <?php
 
-if (isset($_POST['first_name']) &&
-    isset($_POST['surname']) &&
-    isset($_POST['phone']) &&
-    isset($_POST['password'])) {
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Origin, Authorization, Content-Type, X-Requested-With, Accept");
 
-    $first_name = $_POST['first_name'];
-    $surname = $_POST['surname'];
-    $phone = $_POST['phone'];
-    $password = $_POST['password'];
+include_once 'settings.php';
 
-    $query = $pdo -> query("SELECT * FROM users WHERE phone = '{$phone}'");
-    $user = $query -> fetch(PDO::FETCH_ASSOC);
+try {
+    $pdo = new PDO("mysql:host={$localhost};dbname={$database}", $username, $password);
 
-    if ($user) {
-        $array = array('error' => 'Пользователь с таким телефоном уже зарегистрирован.');
-        header('HTTP/1.0 422 Unprocessable entity');
-        api_response($array);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage();
+    die();
+}
+
+
+if (isset($_GET['api'])) {
+
+    if (isset($_GET['signup'])) {
+
+        include_once "signup.php";
+    }
+
+    else if (isset($_GET['login'])) {
+
+        include_once "login.php";
+    }
+
+    else if (isset($_GET['photo'])) {
+
+        include_once "photo.php";
     }
 
     else {
 
-        $prepare = $pdo->prepare("INSERT INTO 
-                    users (first_name, surname, phone, password) 
-                    values (:first_name, :surname, :phone, :password)");
-
-        $prepare->bindValue(":first_name", $first_name);
-        $prepare->bindValue(":surname", $surname);
-        $prepare->bindValue(":phone", $phone);
-        $prepare->bindValue(":password", $password);
-
-        $execute = $prepare->execute();
-
-        if ($execute) {
-
-            $user_id = $pdo->lastInsertId();
-
-            $array = array('id' => $user_id);
-            header('HTTP/1.0 201 Created');
-            api_response($array);
-        } else {
-            $array = array('error' => 'Добавить пользователя не удалось.');
-            header('HTTP/1.0 422 Unprocessable entity');
-            api_response($array);
-        }
+        header('HTTP/1.0 404 Not Found');
+        exit;
     }
 }
 
 else {
 
-    $array = array('error' => 'Нет всех обязательных данных.');
+    header('HTTP/1.0 404 Not Found');
+    exit;
+}
 
-    header('HTTP/1.0 422 Unprocessable entity');
-    api_response($array);
+function api_response($array) {
+
+    // Заголовки на ответ.
+    header("Content-Type: application/json; charset=utf-8");
+    echo json_encode($array);
+    exit;
 }

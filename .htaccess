@@ -1,20 +1,20 @@
  # Стратовый файл.
- DirectoryIndex /index.php
+ #DirectoryIndex /index.php
 
  # Заголовок авторизации.
- SetEnvIf Authorization .+ HTTP_AUTHOIZATION=$0
+ #SetEnvIf Authorization .+ HTTP_AUTHOIZATION=$0
 
  # Модуль маршрутизации.
- RewriteEngine On
+ #RewriteEngine On
 
  # Базовый орневой каталог.
- RewriteBase /
+# RewriteBase /
 
  # Ошибка 404.
- ErrorDocument 404 /
+ #ErrorDocument 404 /
 
  # Запросы апи.
- RewriteRule ^api$ /?api [L]
- RewriteRule ^api/signup$ /?api&signup [L]
- RewriteRule ^api/login$ /?api&login [L]
- RewriteRule ^api/photo/([0-9]{1,})$ /?api&photo=$1 [L]
+ #RewriteRule ^api$ /?api [L]
+ #RewriteRule ^api/signup$ /?api&signup [L]
+ #RewriteRule ^api/login$ /?api&login [L]
+ #RewriteRule ^api/photo/([0-9]{1,})$ /?api&photo=$1 [L]
